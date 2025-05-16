@@ -42,5 +42,9 @@ USER appuser
 # Порт
 EXPOSE 8081
 
+# Проверка работоспособности приложения
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+CMD wget -q --spider http://localhost:8081/health || exit 1
+
 # Запуск приложения
 CMD ["/app/momo-store"]

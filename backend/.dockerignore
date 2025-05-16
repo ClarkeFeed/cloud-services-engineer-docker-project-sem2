@@ -1,0 +1,12 @@
+.git
+.gitignore
+tmp/
+temp/
+*_test.go
+test/
+tests/
+*.test
+*.log
+*.out
+bin/
+build/
