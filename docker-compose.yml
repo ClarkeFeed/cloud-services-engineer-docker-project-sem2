@@ -1,4 +1,32 @@
 services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: docker-project-backend:latest
+    container_name: momo-store-backend
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8081/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    cap_drop:
+      - all
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+    networks:
+      - inner-net
+
   frontend:
     build:
       context: ./frontend
@@ -25,23 +53,18 @@ services:
       - all
     security_opt:
       - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    networks:
+      - public-net
+      - inner-net
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: docker-project-backend:latest
-    container_name: momo-store-backend
-    restart: on-failure
-    ports:
-      - "8081:8081"
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:8081/health"]
-      interval: 15s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    cap_drop:
-      - all
-    security_opt:
-      - no-new-privileges:true
+networks:
+  public-net:
+    driver: bridge
+  inner-net:
+    driver: bridge
+    internal: true
