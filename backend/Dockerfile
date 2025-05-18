@@ -1,5 +1,5 @@
 # Этап сборки
-FROM golang:1.22.7-alpine AS builder
+FROM golang:1.24.3-alpine AS builder
 
 # Рабочая директория
 WORKDIR /app
@@ -13,11 +13,11 @@ RUN go mod download
 # Копирование остальных файлов
 COPY . .
 
-# Сборка приложения
+# Сборка приложения (без зависимостей и уменьшения размера)
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/app ./cmd/api
 
 # Этап запуска приложения
-FROM alpine:3.18
+FROM alpine:3.21.3
 
 # Установка сертификатов CA для HTTPS запросов
 RUN apk --no-cache add ca-certificates && \

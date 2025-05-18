@@ -1,5 +1,5 @@
 # Этап сборки
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Переменная для сборки
 ENV NODE_OPTIONS=--openssl-legacy-provider
@@ -24,7 +24,7 @@ RUN npm run build && \
     chown -R appuser:appgroup /app/dist
 
 # Этап запуска приложения
-FROM nginx:1.25-alpine
+FROM nginx:1.27-alpine
 
 # Пользователь и группа
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
