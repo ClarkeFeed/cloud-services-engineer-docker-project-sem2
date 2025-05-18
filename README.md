@@ -1,7 +1,7 @@
-# Проект «Cloud Services Engineer Docker Project Sem2»
+# Проект "Cloud Services Engineer Docker Project Sem2"
 
 **Краткое описание**  
-Учебный проект по курсу «Cloud Services Engineer». Он демонстрирует сборку и оркестрацию микросервисов с помощью Docker Compose. В составе проекта:
+Учебный проект по курсу "Cloud Services Engineer", магазин пельменей "Момо". Он демонстрирует сборку и оркестрацию микросервисов с помощью Docker Compose. В составе проекта:
 
 - **backend** — микросервис на Go, реализующий REST-API.
 - **frontend** — приложение на Vue.js + TypeScript.
@@ -58,7 +58,11 @@ docker ps
 
 Для уменьшения веса образов в сборке использовались следующие приёмы:
 1. alpine образы;
-2. флаг `CGO_ENABLED=0` для backend;
-3. флаги `--no-audit --no-fund` для frontend.
+2. multi-stage build;
+3. добавлен .dockerignore;
+4. флаг `CGO_ENABLED=0` для backend;
+5. флаги `--no-audit --no-fund` для frontend.
+
+Это позволяет не пересобирать зависимости при каждом изменении исходного кода, .dockerignore позволяет исключить добавления ненужных файлов при сборке.
 
 Для nginx был настроен gzip и Cache-Control для кеширования и уменьшения размера передаваемых файлов.
