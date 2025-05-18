@@ -57,8 +57,9 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
   run-with-docker-compose:
-    name: Push Docker image to DockerHub
+    name: Run with Docker Compose
     runs-on: ubuntu-latest
+    needs: [trivy_scan]
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
