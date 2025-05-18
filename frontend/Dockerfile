@@ -47,6 +47,9 @@ RUN chown -R appuser:appgroup /var/cache/nginx && \
     chown -R appuser:appgroup /var/run/nginx.pid && \
     chmod -R 755 /usr/share/nginx/html
 
+# Обновление пакетов для trivy_scan
+RUN apk update && apk upgrade
+
 # Переключение на созданного непривилегированного пользователя
 USER appuser
 
